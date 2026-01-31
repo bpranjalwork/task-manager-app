@@ -1,3 +1,4 @@
+require("dotenv").config(); // Load environment variables at the very top
 const express = require("express");
 const cors = require("cors");
 const db = require("./db");
@@ -5,7 +6,10 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const app = express();
-const JWT_SECRET = "your_super_secret_key";
+
+// Use variables from .env, or fall back to defaults for local development
+const JWT_SECRET = process.env.JWT_SECRET || "your_super_secret_key";
+const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
@@ -99,4 +103,4 @@ app.delete("/tasks/:id", async (req, res) => {
   }
 });
 
-app.listen(5000, () => console.log("🚀 Server running on port 5000"));
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
